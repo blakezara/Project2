@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ALIENS-R-REAL</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/Users/mattbenner/Desktop/style.css">
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="jumbotron">
+        <h1 class="display-3">Mapping The Restaurants</h1>
+        <br>
+        <h2 class="lead">A Comparison to U.S Census Data</h2>
+        <h2 class="lead">Let's dig in!</h2>
+      </div>
+
+    <div class="row">
+      <div class="col-md-9 text-left">
+        <div class="form-inline">
+          <label>Show
+            <select id="pages">
+              <option value="10">10</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>  Records
+          </label>
+        </div>
+      </div>
+      <div class="col-md-3 text-right">
+        <div class="form-inline">
+          <p id="recordCounter"> From Record: to: of </p>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" id="County" placeholder="County">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" id="State" placeholder="State">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" id="Store Count" placeholder="Store Count">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" id="Median Income" placeholder="Median Income">
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+
+          <div class="row"><hr></div>
+
+          <div class="row">
+            <div class="col-md-4 text-left"></div>
+            <div class="col-md-4 text-center">
+              <button id="search" type="button" class="btn btn-success">Search</button>
+            </div>
+            <div class="col-md-4 text-right"></div>
+          </div>
+
+          <div class="row">
+            <hr>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="span6">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>County</th>
+                <th>State</th>
+                <th>Store Count</th>
+                <th>Median Income</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+      <div class="row">
+        <div class="col-md-4 text-left">
+          <button id="prev" type="button" class="btn btn-primary">< Prev Page</button>
+        </div>
+        <div class="col-md-4 text-center">
+          <button id="load" type="button" class="btn btn-danger">Reload</button>
+        </div>
+        <div class="col-md-4 text-right">
+          <button id="next" type="button" class="btn btn-primary">Next Page ></button>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <script src="/Users/mattbenner/Desktop/NW_Data/Javascript HW/data.js" type="text/javascript"></script>
+    <script src="/Users/mattbenner/Desktop/index.js" type="text/javascript"></script>
+
+  </body>
+
+</html>
