@@ -10,6 +10,12 @@
     background-repeat:no-repeat;
     display: compact;
     color: rgb(400,255,255);
+
+}
+
+#map {
+    height: 50%;
+    width: 50%;
 }
 
 h2 {
