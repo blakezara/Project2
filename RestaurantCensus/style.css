@@ -5,7 +5,7 @@
 }
 
 .jumbotron {
-    background-image: url("Food.jpg");
+    background-color: black;
     background-size: 100%;
     background-repeat:no-repeat;
     display: compact;
