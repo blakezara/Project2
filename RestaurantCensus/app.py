@@ -1,59 +1,111 @@
-import os
-
-import pandas as pd
+############## Import Libraries #####################
+import datetime as dt
 import numpy as np
+import pandas as pd
+import os
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 
-from flask import Flask, jsonify, render_template
+
+from flask import (
+    Flask, 
+    render_template, 
+    jsonify, 
+    request, 
+    redirect)
+################# Flask Setup ##########################
+
 app = Flask(__name__)
 
-
 #################################################
-# Database Setup
+# sqlite : connect to the existing database
 #################################################
-dbfile = os.path.join('db', 'foodstore_seven.sqlite')
-engine = create_engine("sqlite:///"+ dbfile)
 
-# reflect an existing database into a new model
+engine = create_engine("sqlite:///DataSets/belly_button_biodiversity.sqlite", echo=False)
 Base = automap_base()
-# reflect the tables
 Base.prepare(engine, reflect=True)
-
-# Save references to each table
-Samples_Metadata = Base.classes.samples_metadata
+Base.classes.keys()
 OTU = Base.classes.otu
 Samples = Base.classes.samples
-
-# Create our session (link) from Python to the DB
+SamplesMetadata = Base.classes.samples_metadata
 session = Session(engine)
 
 
+#################################################
+# Flask Routes
+#################################################
+
+def __repr__(self):
+    return '<Bio %r>' % (self.name)
+
+# render index.html
 @app.route("/")
-def index():
-    """Return the homepage."""
-    return render_template('index.html')
+def home():
+    return render_template("index.html")
+
+# list of sample names 
+@app.route("/names", methods=['POST','GET'])
+def names():
+
+    samples_cols_list = Base.classes.samples.__table__.columns.keys()
+    sample_list = samples_cols_list[1:]
+    return jsonify(samples_cols_list[1:])
+
+# otu_id's
+@app.route("/otu", methods=['POST','GET'])
+def otu():
+
+    otu_desc = session.query(OTU.lowest_taxonomic_unit_found).all()
+    otu_descriptions = [i[0] for i in otu_desc]
+    return jsonify(otu_descriptions)
+
+# metadata for a specific sample
+@app.route('/metadata/<sample>', methods=['POST','GET'])
+def metadata(sample):
+
+    results = session.query(SamplesMetadata).filter(SamplesMetadata.SAMPLEID == sample[3:]).all()
+    dict1 = {}
+    for k,v in results[0].__dict__.items():
+        if ('AGE' in k or 'BBTYPE' in k or 'ETHNICITY' in k or 'GENDER' in k or 'LOCATION' in k or 'SAMPLEID' in k):
+            dict1[k] = v
+
+    return jsonify(dict1)
+    
+# washing frequency for a specific sample
+@app.route('/wfreq/<sample>', methods=['POST','GET'])
+def wfreq(sample):
+
+    results = session.query(SamplesMetadata.WFREQ).filter(SamplesMetadata.SAMPLEID == sample[3:]).all()
+    
+    return jsonify(results[0][0])
+
+# otu_id's and corresponding sample count in descending order 
+# for a specific sample
+@app.route('/samples/<sample>', methods=['POST','GET'])
+def samples(sample):
+
+    results = session.query(Samples.otu_id,getattr(Samples, sample)).order_by(getattr(Samples, sample).desc()).all()
+    results
+    dict1 = {}
+    dict2 = {}
+    list1 = []
+    list2 = []
+    list3 = []
+    for x in results:
+        if(x[1] > 0):
+            list1.append(x[0])
+            list2.append(x[1])
+    dict1['otu_id'] = list1
+    dict1['sample_values'] = list2
+    list3.append(dict1)
+    list3
+
+    return jsonify(list3)
 
 
-@app.route('/county')
-def county():
-    """Return a list of sample names."""
-
-    # Use Pandas to perform the sql query
-    stmt = session.query(Samples).statement
-    df = pd.read_sql_query(stmt, session.bind)
-    df.set_index('otu_id', inplace=True)
-
-    # Return a list of the column names (sample names)
-    return jsonify(list(df.columns))
-
-@app.route('/state)
-def state():
-    """Return a list of sample names."""
-
-
-if __name__ == "__main__":
+# Initiate the Flask app
+if __name__ == '__main__':
     app.run(debug=True)
