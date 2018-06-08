@@ -19,6 +19,37 @@ $pages.addEventListener("change", handlePagesChange);
 var filteredData = dataSet;
 var count = 0;
 
+//adding in random dropdown//
+function addDropdown() {
+    console.log("inside addDropdown()");
+    
+    // put list of sample names into an array
+    s = [];
+    queryURL = 'http://localhost:5000/state';
+    // Take response and assign to sampleNames array
+    d3.json(queryURL, function (error, response) 
+    {
+      if (error) {
+        console.log(error);
+      }
+      else {
+        s = response;
+  
+        // Add each item as option to dropdown  
+        for (var i = 0; i < s.length; i++) {
+          d3.select("#selDataset").append("option")
+            .attr("value", s[i]["name"])
+            .text(s[i]);
+        }
+  
+        optionChanged(s[0]);
+  
+      }
+    }
+);
+  
+  }
+
 
 function handleNextButtonClick() {
     count++;
