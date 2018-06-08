@@ -48,16 +48,16 @@ def home():
 ####all above is good dont touch#####
 # render index.html
 
-@app.route('/state')
+@app.route("/state")
 def states():
-
     stmt = session.query(Food).statement
     df = pd.read_sql_query(stmt, session.bind)
     df.set_index('id', inplace=True)
-    s = df['state'].unique()
+    s = df.groupby(['state'])['zip'].count().to_frame()
+    fuckers = s.index.tolist()
 
-    # Return a list of the column names (sample names)
-    return jsonify(list(s.columns))
+    return jsonify(fuckers[1:])
+
 
 # # otu_id's
 # @app.route("/otu", methods=['POST','GET'])

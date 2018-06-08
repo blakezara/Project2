@@ -1,53 +1,44 @@
-var $tbody = document.querySelector("tbody");
-var $countyInput = document.querySelector("#county");
-var $stateInput = document.querySelector("#state");
-var $storecountInput = document.querySelector("#storecount");
-var $medianincomeInput = document.querySelector("#medianincome");
-var $searchBtn = document.querySelector("#search");
-var $recordCounter = document.querySelector("#recordCounter");
-var $pages = document.querySelector("#pages");
-var $loadBtn = document.querySelector("#load");
-var $nextBtn = document.querySelector("#next");
-var $prevBtn = document.querySelector("#prev");
+// var $tbody = document.querySelector("tbody");
+// var $countyInput = document.querySelector("#county");
+// var $stateInput = document.querySelector("#state");
+// var $storecountInput = document.querySelector("#storecount");
+// var $medianincomeInput = document.querySelector("#medianincome");
+// var $searchBtn = document.querySelector("#search");
+// var $recordCounter = document.querySelector("#recordCounter");
+// var $pages = document.querySelector("#pages");
+// var $loadBtn = document.querySelector("#load");
+// var $nextBtn = document.querySelector("#next");
+// var $prevBtn = document.querySelector("#prev");
 
-$searchBtn.addEventListener("click", handleSearchButtonClick);
-$loadBtn.addEventListener("click", handleReloadButtonClick);
-$nextBtn.addEventListener("click", handleNextButtonClick);
-$prevBtn.addEventListener("click", handlePrevButtonClick);
-$pages.addEventListener("change", handlePagesChange);
+// $searchBtn.addEventListener("click", handleSearchButtonClick);
+// $loadBtn.addEventListener("click", handleReloadButtonClick);
+// $nextBtn.addEventListener("click", handleNextButtonClick);
+// $prevBtn.addEventListener("click", handlePrevButtonClick);
+// $pages.addEventListener("change", handlePagesChange);
 
-var filteredData = dataSet;
-var count = 0;
+// var filteredData = dataSet;
+// var count = 0;
 
 //adding in random dropdown//
 function addDropdown() {
     console.log("inside addDropdown()");
-    
-    // put list of sample names into an array
-    s = [];
-    queryURL = 'http://localhost:5000/state';
+
     // Take response and assign to sampleNames array
-    d3.json(queryURL, function (error, response) 
+    d3.json("/state", function (error, response) 
     {
-      if (error) {
-        console.log(error);
-      }
-      else {
-        s = response;
-  
-        // Add each item as option to dropdown  
-        for (var i = 0; i < s.length; i++) {
-          d3.select("#selDataset").append("option")
-            .attr("value", s[i]["name"])
-            .text(s[i]);
+        if (error) return console.warn(error);
+     
+        var dropDown = document.getElementById("selDataset")
+     
+        for (var i=0; i< response.length; i++){
+            var optionChoice = document.createElement("option");
+            optionChoice.innerHTML = response[i];
+            optionChoice.setAttribute("value", response[i]);
+            dropDown.appendChild(optionChoice);
         }
-  
-        optionChanged(s[0]);
-  
-      }
-    }
-);
-  
+        optionChanged(response[0])
+     });
+
   }
 
 
