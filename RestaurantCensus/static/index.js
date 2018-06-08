@@ -20,8 +20,8 @@
 // var count = 0;
 
 //adding in random dropdown//
-function addDropdown() {
-    console.log("inside addDropdown()");
+// function addDropdown() {
+//     console.log("inside addDropdown()");
 
     // Take response and assign to sampleNames array
     d3.json("/state", function (error, response) 
@@ -39,7 +39,55 @@ function addDropdown() {
         optionChanged(response[0])
      });
 
-  }
+function init(sample){
+    // sample metadata panel
+    d3.json("/metadata/" + sample, function(error, response){
+        if (error) return console.warn(error);
+
+        // get list of keys from response
+        var responseKeys = Object.keys(response);
+
+        // identify correct div
+        var sampleInfoPanel = document.querySelector("#sample-metadata");
+       
+        // reset HTML to be nothing
+        sampleInfoPanel.innerHTML = null;
+
+        // loop through response keys and create a P element for each including
+        // response key and value
+        for (var i=0; i<responseKeys.length; i++){
+            var dataPoint = document.createElement('p');
+            dataPoint.innerHTML = responseKeys[i] + ": " + response[responseKeys[i]];
+            sampleInfoPanel.appendChild(dataPoint)
+        };
+
+    });
+  
+var defaultSample = "AL"
+
+function init(state){
+    // sample metadata panel
+    d3.json(state, function(error, response){
+        if (error) return console.warn(error);
+
+        // get list of keys from response
+        var responseKeys = Object.keys(response);
+
+        // identify correct div
+        var sampleInfoPanel = document.querySelector("#sample-metadata");
+       
+        // reset HTML to be nothing
+        sampleInfoPanel.innerHTML = null;
+
+        // loop through response keys and create a P element for each including
+        // response key and value
+        for (var i=0; i<responseKeys.length; i++){
+            var dataPoint = document.createElement('p');
+            dataPoint.innerHTML = responseKeys[i] + ": " + response[responseKeys[i]];
+            sampleInfoPanel.appendChild(dataPoint)
+        };
+
+    });
 
 
 function handleNextButtonClick() {

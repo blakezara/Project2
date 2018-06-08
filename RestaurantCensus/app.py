@@ -32,6 +32,8 @@ Food = Base.classes.food_seven
 
 session = Session(engine)
 
+
+
 ###all above is good dont touch#####
 #################################################
 # Flask Routes
@@ -57,6 +59,20 @@ def states():
     fuckers = s.index.tolist()
 
     return jsonify(fuckers[1:])
+
+# # metadata for a specific sample
+# @app.route('<sample>', methods=['POST','GET'])
+# def sample_query(sample):
+#     sample_name = sample.replace("", "")
+#     result = session.query(SamplesMetadata.median_income, SamplesMetadata.population, SamplesMetadata.count).filter_by(SAMPLEID = "1").all()
+#     record = result[0]
+#     result_dict = {
+#         "income": record[0],
+#         "populatio": record[1],
+#         "count": record[2],
+#     }
+
+#     return jsonify(record_dict)
 
 
 # # otu_id's
