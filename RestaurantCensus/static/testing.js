@@ -12,33 +12,14 @@ d3.json("/state", function (error, response)
     }
 
  });
-var defaultSample = "HI"
 
-function init(sample){
-// sample metadata panel
-    d3.json("/metadata/" + sample, function(error, response){
-        if (error) return console.warn(error);
+ 
+  
+//attempto build out scatter plot for state by state data--- having trouble
 
-    // get list of keys from response
-        var responseKeys = Object.keys(response);
 
-    // identify correct div
-        var sampleInfoPanel = document.querySelector("#sample-metadata");
-   
-    // reset HTML to be nothing
-        sampleInfoPanel.innerHTML = null;
 
-    // loop through response keys and create a P element for each including
-    // response key and value
-     for (var i=0; i<responseKeys.length; i++){
-        var dataPoint = document.createElement('p');
-        dataPoint.innerHTML = responseKeys[i] + ": " + response[responseKeys[i]];
-        sampleInfoPanel.appendChild(dataPoint)
-    };
-
-});
-
-function optionChanged(chosenSample){
+    function optionChanged(chosenSample){
    
     d3.json("/metadata/" + chosenSample, function(error, response){
 
@@ -55,7 +36,7 @@ function optionChanged(chosenSample){
         sampleInfoPanel.innerHTML = null;
 
         for (var i=0; i<responseKeys.length; i++){
-            var $dataPoint = document.createElement('p');
+            var dataPoint = document.createElement('p');
             dataPoint.innerHTML = responseKeys[i] + ": " + response[responseKeys[i]];
             sampleInfoPanel.appendChild(dataPoint)
         };
@@ -66,5 +47,3 @@ function optionChanged(chosenSample){
 
 }
 
-  }
-init(defaultSample);

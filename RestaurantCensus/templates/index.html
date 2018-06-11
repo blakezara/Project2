@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-  <!-- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Restaurant Census</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../style.css">
-  </head> -->
-
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,42 +25,35 @@
           allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
         <h1 class="display-3">Mapping The Restaurants</h1>
         <br>
-        <h2 class="lead">A Comparison to U.S Census Data</h2>
-        <h2 class="lead">Let's dig in!</h2>
+        <p>Our project is a combination of fast food restaurant location data as well as census data looking at median income, population and health for states.</p>
       </div>
 
-
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <div class="row">
-            <div class="col-md-1"></div>
-             <select id="selDataset" onchange="optionChanged(this.value)"></select>
-
+      <div class="row">
+        <div class="col-md-4">
+            <div class="well">
+                <h5>SELECT Sample:</h5>
+                <select id="selDataset" onchange="optionChanged(this.value)"></select>
             </div>
-
-    <div class="col-md-12">
-                            
-      <div class="panel panel-info" style="overflow:auto; overflow-wrap:break-word">
-            <div class="panel-heading">
-                  <h3 class="panel-title">State Information</h3>
+                    <div class="panel panel-info" style="overflow:auto; overflow-wrap:break-word">
+                        <div class="panel-heading">
+                    <h3 class="panel-title">State Information</h3>
+                </div>
+                <div id="sample-metadata" class="panel-body"></div>
             </div>
-            <div id="sample-metadata" class="panel-body">
-                  
+        </div>
+
+    <div class="col-md-8">
+
+            <h5>Plotting State Data</h5>
+            <div>
+                <a href="https://plot.ly/~blakezara/12/?share_key=xpL97O8vGzDRMdAjmWcT9b" target="_blank" title="Plot 12" style="display: block; text-align: center;"><img src="https://plot.ly/~blakezara/12.png?share_key=xpL97O8vGzDRMdAjmWcT9b" alt="Plot 12" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+                <script data-plotly="blakezara:12" sharekey-plotly="xpL97O8vGzDRMdAjmWcT9b" src="https://plot.ly/embed.js" async></script>
             </div>
-      </div>
-      
-  </div>
-</div>
+            </div>
+            </div>
+            
 
-</div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
-    <!-- <script src="/Users/mattbenner/Desktop/NW_Data/Javascript HW/data.js" type="text/javascript"></script> -->
-    <!-- <script src="../static/index.js" type="text/javascript"></script> -->
-    <script type="text/javascript" src="{{ url_for('static', filename='in.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='testing.js') }}"></script>
 
   </body>
 

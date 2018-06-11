@@ -64,7 +64,7 @@ def states():
 
 @app.route("/metadata/<sample>")
 def state_data(sample):
-    sample_name = sample.replace("state","")
+    sample_name = sample.replace("","")
     result = session.query(Food.Population_2014, Food.Median_Household_Income_2014, Food.state, Food.Adult_Diabetes_2014, Food.id).filter_by(state = sample_name).all()
     record = result[0]
     dict_list = {
@@ -72,13 +72,10 @@ def state_data(sample):
     "Median_Household_Income_2014": record[1],
     "state": record[2],
     "Adult_Diabetes_2014": record[3],
-
+    "Fast_Food_Restaurants_2014": record[4],
 
 }
-    return (dict_list)
-
-
-
+    return jsonify(dict_list)
 
 
 # Initiate the Flask app
