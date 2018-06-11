@@ -56,62 +56,29 @@ def states():
     df = pd.read_sql_query(stmt, session.bind)
     df.set_index('id', inplace=True)
     s = df.groupby(['state'])['zip'].count().to_frame()
-    fuckers = s.index.tolist()
+    the_states = s.index.tolist()
 
-    return jsonify(fuckers[1:])
+    return jsonify(the_states[1:])
 
 
 
-# # otu_id's
-# @app.route("/otu", methods=['POST','GET'])
-# def otu():
+@app.route("/metadata/<sample>")
+def state_data(sample):
+    sample_name = sample.replace("state","")
+    result = session.query(Food.Population_2014, Food.Median_Household_Income_2014, Food.state, Food.Adult_Diabetes_2014, Food.id).filter_by(state = sample_name).all()
+    record = result[0]
+    dict_list = {
+    "Population_2014": record[0],
+    "Median_Household_Income_2014": record[1],
+    "state": record[2],
+    "Adult_Diabetes_2014": record[3],
 
-#     otu_desc = session.query(OTU.lowest_taxonomic_unit_found).all()
-#     otu_descriptions = [i[0] for i in otu_desc]
-#     return jsonify(otu_descriptions)
 
-# # metadata for a specific sample
-# @app.route('/metadata/<sample>', methods=['POST','GET'])
-# def metadata(sample):
+}
+    return (dict_list)
 
-#     results = session.query(SamplesMetadata).filter(SamplesMetadata.SAMPLEID == sample[3:]).all()
-#     dict1 = {}
-#     for k,v in results[0].__dict__.items():
-#         if ('AGE' in k or 'BBTYPE' in k or 'ETHNICITY' in k or 'GENDER' in k or 'LOCATION' in k or 'SAMPLEID' in k):
-#             dict1[k] = v
 
-#     return jsonify(dict1)
-    
-# # washing frequency for a specific sample
-# @app.route('/wfreq/<sample>', methods=['POST','GET'])
-# def wfreq(sample):
 
-#     results = session.query(SamplesMetadata.WFREQ).filter(SamplesMetadata.SAMPLEID == sample[3:]).all()
-    
-#     return jsonify(results[0][0])
-
-# # otu_id's and corresponding sample count in descending order 
-# # for a specific sample
-# @app.route('/samples/<sample>', methods=['POST','GET'])
-# def samples(sample):
-
-#     results = session.query(Samples.otu_id,getattr(Samples, sample)).order_by(getattr(Samples, sample).desc()).all()
-#     results
-#     dict1 = {}
-#     dict2 = {}
-#     list1 = []
-#     list2 = []
-#     list3 = []
-#     for x in results:
-#         if(x[1] > 0):
-#             list1.append(x[0])
-#             list2.append(x[1])
-#     dict1['otu_id'] = list1
-#     dict1['sample_values'] = list2
-#     list3.append(dict1)
-#     list3
-
-#     return jsonify(list3)
 
 
 # Initiate the Flask app
